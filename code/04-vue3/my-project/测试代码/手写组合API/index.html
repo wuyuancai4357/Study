@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手写组合API测试</title>
+</head>
+
+<body>
+
+    <h5>手写组合API</h5>
+
+    <script src="./index.js"></script>
+
+    <script type="text/javascript">
+
+        //shallowReactive不能进行深度劫持，即作浅层劫持，没有用递归进行深度劫持
+        const proxyUser1 = shallowReactive({
+            name: 'tony',
+            age: 20,
+            car: {
+                name: 'bmw'
+            }
+        })
+        //拦截到读取数据
+        proxyUser1.name
+        //拦截到更改数据
+        proxyUser1.name = 'peter'
+        //shallowReactive不能操作深层数据,只能读取深层数据
+        proxyUser1.car.color = 'red'
+        //拦截到删除数据
+        delete proxyUser1.age
+
+        console.log('--------------');
+
+        //reactive可以深层劫持数据，运用递归实现深层劫持数据
+        const proxyUser2 = reactive({
+            name: 'tony',
+            car: {
+                name: 'bmw'
+            }
+        })
+        //拦截到读取数据
+        proxyUser2.name
+        //拦截到更改数据
+        proxyUser2.name = 'peter'
+        //reactive能操作深层数据
+        proxyUser2.car.color = 'red'
+        //拦截到删除数据
+        delete proxyUser2.car.name
+
+        console.log("++++++++++++++++");
+
+        const proxyUser3 = shallowReadonly({
+            name: 'mary',
+            age: 20,
+            car: {
+                name: 'bmw',
+                color: 'blue'
+            }
+        })
+        //拦截到读取数据操作
+        proxyUser3.name
+        // 未拦截到读取数据，不能操作浅层数据
+        proxyUser3.name = 'rose'
+        // 拦截到读取数据，拦截不了深度操作数据，操作会生效
+        proxyUser3.car.color = 'red'
+        // 拦截到读取数据，可以删除数据
+        delete proxyUser3.car.name
+
+        console.log('***************');
+
+
+        // 浅层数据操作时，拦截不到读取数据，深层数据操作时，可以拦截到读取数据
+        const proxyUser4 = readonly({
+            name: 'mary',
+            age: 20,
+            car: {
+                name: 'bmw',
+                color: 'blue'
+            }
+        })
+        // 拦截到读取数据
+        proxyUser4.name
+        // 未拦截到读取数据，不能操作数据
+        proxyUser4.name = 'cindy'
+        // 拦截到读取数据，不能操作数据,操作没有生效
+        proxyUser4.car.name = 'byd'
+        // 未拦截到读取数据，不能删除数据
+        delete proxyUser4.age
+        // 拦截到读取数据，不能删除数据
+        delete proxyUser4.car.color
+
+
+        console.log('__________________________');
+
+        const proxyUser5 = shallowRef({
+            name: 'mary',
+            age: 20,
+            car: {
+                name: 'bmw',
+                color: 'blue'
+            }
+        })
+
+        // 拦截到读取数据
+        console.log(proxyUser5.value);
+        // 未拦截读取数据, 拦截到操作浅层数据，修改生效
+        // proxyUser5.value = 'coco'
+        // console.log(proxyUser5);
+        // 都拦截到读取数据，未拦截到操作数据，数据改变
+        proxyUser5.value.name = 'cici'
+        proxyUser5.value.car.color = 'pink'
+        console.log(proxyUser5.value);
+
+        console.log('......................');
+
+        const proxyUser6 = ref({
+            name: 'mary',
+            age: 20,
+            car: {
+                name: 'bmw',
+                color: 'blue'
+            }
+        })
+
+
+        // 拦截到读取数据
+        console.log(proxyUser6.value);
+
+        // 未拦截到读取数据，拦截到操作数据，数据改变
+        // proxyUser6.value='oooo'
+        // console.log(proxyUser6);
+
+
+        // 因传入ref的参数为对象，所以调用reactive来对对象中的car属性对象
+        // 进行响应式处理，转换为proxy代理对象
+        // 拦截到ref的读取数据，拦截到reactive的更改数据，数据改变
+        proxyUser6.value.name = 'lucy'
+        // console.log(proxyUser6.value);
+
+        // 拦截到ref的读取数据，拦截到reactive的读取数据，
+        // 拦截到reactive的更改数据，数据改变
+        proxyUser6.value.car.color = 'purple'
+        console.log(proxyUser6.value);
+
+
+        console.log(isRef(ref({})));
+        console.log(isReactive(reactive({})));
+        console.log(isReadonly(readonly({})));
+        console.log(isProxy(reactive({})));
+        console.log(isProxy(readonly({})));
+
+    </script>
+
+</body>
+
+</html>

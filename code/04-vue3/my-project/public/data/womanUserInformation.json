@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "mary",
+        "age": 20,
+        "address": "泸州市泸县"
+    },
+    {
+        "id": 2,
+        "name": "rose",
+        "age": 20,
+        "address": "泸州市泸县"
+    }
+]

@@ -1,0 +1,5 @@
+// import './类'
+// import './函数'
+// import './泛型'
+// import './声明文件'
+import './内置对象'

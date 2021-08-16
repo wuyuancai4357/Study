@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        document.write("你好")
+        //目标数据对象
+        const couple = {
+            name: "小明",
+            age: 15,
+            wife: {
+                name: "小红",
+                age: 15
+            }
+        }
+
+        //将代理对象和reflect反射结合，可实现数据的响应式操作
+        //将目标对象转换为代理对象proxy(target,handler)
+        //couple====>target目标对象；handler---->处理器对象，监视数据及操作
+        const proxyCouple = new Proxy(couple, {
+            get(target, prop) {
+                console.log("你好get")
+                return Reflect.get(target, prop)
+            },
+            //修改属性值/添加属性 proxy监视第一层目标对象属性值
+            //若修改目标对象中属性对象中的属性值，不会调用set方法(即proxy没有监视目标对象的属性对象的属性值)，但是操作会生效，会更新属性值
+            set(target, prop, val) {
+                console.log("你好set")
+                return Reflect.set(target, prop, val)
+            },
+            deleteProperty(target, prop) {
+                console.log("你好delete")
+                return Reflect.deleteProperty(target, prop)
+            }
+        })
+
+        //测试是否获取到了目标对象
+        console.log(proxyCouple.name)   //打印之前，都自动调用一次get方法
+
+        //对代理对象进行操作(PropertyDataUpdate,PropertyAdd)时，自动调用了set方法
+        proxyCouple.name = "小军" //调用set方法
+        proxyCouple.gender = "男" //调用set方法，自动添加到末尾
+        console.log(couple)
+
+        //删除目标对象的属性
+        delete proxyCouple.name
+        console.log(couple)
+
+        //修改目标对象中属性对象的属性值
+        proxyCouple.wife.name = "小兰"  //没有调用代理对象中的set方法(即proxy监视的是第一层目标对象属性值)，数据更改，操作生效
+        console.log(couple)
+    </script>
+</body>
+
+</html>
