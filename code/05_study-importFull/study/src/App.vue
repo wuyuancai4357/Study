@@ -1,7 +1,7 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
 
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
   <div>
     <el-button @click="show = !show">Click Me</el-button>
 
@@ -14,6 +14,10 @@
       </transition>
     </div>
   </div>
+  <el-alert
+    title="成功提示的文案"
+    type="success">
+  </el-alert>
 
   <el-container>
     <el-aside width="200px">Aside</el-aside>
@@ -49,9 +53,9 @@ import HelloWorld from './components/HelloWorld.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
-  },
+  // components: {
+  //   HelloWorld
+  // },
   setup(props) {
     const show = ref(true)
 
