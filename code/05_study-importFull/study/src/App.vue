@@ -4,7 +4,6 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
   <div>
     <el-button @click="show = !show">Click Me</el-button>
-
     <div style="display: flex; margin-top: 20px; height: 100px;">
       <transition name="el-fade-in-linear">
         <div v-show="show" class="transition-box">.el-fade-in-linear</div>
@@ -18,8 +17,6 @@
     title="成功提示的文案"
     type="success">
   </el-alert>
-  
-
   <el-container>
     <el-aside width="200px">Aside</el-aside>
     <el-container>
