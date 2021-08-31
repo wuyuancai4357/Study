@@ -12,7 +12,7 @@
   </li>
 </template>
 <script lang="ts">
-import { Todo } from "@/type/todo";
+import { Todo } from "../type/todo";
 import { computed, defineComponent, reactive, ref } from "vue";
 
 export default defineComponent({

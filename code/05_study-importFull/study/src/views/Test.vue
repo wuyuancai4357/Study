@@ -1,36 +1,36 @@
 <template>
-    <div>
-        <HelloWorld msg="你好" />
-    </div>
-    <el-button @click="increment()">按钮</el-button>
-    <div>{{ count }}</div>
+	<div>
+		<el-breadcrumb separator="/">
+			<el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
+			<el-breadcrumb-item :to="{ path: '/Test' }">活动管理</el-breadcrumb-item>
+			<el-breadcrumb-item :to="{ path: '/About' }">关于</el-breadcrumb-item>
+		</el-breadcrumb>
+	</div>
+	<el-divider></el-divider>
+	<div>777</div>
 </template>
+
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import HelloWorld from '../components/HelloWorld.vue';
-import store from '../store/index';
+import HelloWorld from "../components/HelloWorld.vue";
+import store from "../store/index";
 
 export default defineComponent({
-    name: "App",
-    components: {
-        HelloWorld,
-    },
-    setup() {
-        const count = ref(0)
-        const increment = () => {
-            store.commit('increment', { amount: 1 })
-            count.value = store.state.count
-            console.log(count.value);
-        }
-        onMounted(() => {
-            count.value = store.state.count
-        })
-        return {
-            count,
-            increment
-        }
-    }
-})
+	name: "Test",
+	setup() {
+		const count = ref(0);
+		const increment = () => {
+			store.commit("increment", { amount: 1 });
+			count.value = store.state.count;
+			console.log(count.value);
+		};
+		onMounted(() => {
+			count.value = store.state.count;
+		});
+		return {
+		};
+	},
+});
 </script>
 <style>
 </style>
