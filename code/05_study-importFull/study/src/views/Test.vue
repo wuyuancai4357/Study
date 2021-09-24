@@ -12,12 +12,12 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import HelloWorld from "../components/HelloWorld.vue";
 import store from "../store/index";
 
 export default defineComponent({
 	name: "Test",
 	setup() {
+		// vuex test 
 		const count = ref(0);
 		const increment = () => {
 			store.commit("increment", { amount: 1 });

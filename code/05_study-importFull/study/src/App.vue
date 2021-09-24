@@ -18,27 +18,27 @@
               text-color="#fff"
               active-text-color="#ffd04b"
             >
-              <el-menu-item index="/Home">
+              <el-menu-item style="padding: 0px;" index="/Home">
                 <i class="el-icon-location"></i>
                 <template #title>首页</template>
               </el-menu-item>
-              <el-menu-item index="/Test">
+              <el-menu-item style="padding: 0px;" index="/Test">
                 <i class="el-icon-menu"></i>
                 <template #title>详情</template>
               </el-menu-item>
-              <el-menu-item index="/About">
+              <el-menu-item style="padding: 0px;" index="/About">
                 <i class="el-icon-document"></i>
                 <template #title>展示</template>
               </el-menu-item>
-              <el-menu-item index="4">
+              <el-menu-item style="padding: 0px;" index="/setting">
                 <i class="el-icon-setting"></i>
                 <template #title>设置</template>
               </el-menu-item>
-              <el-menu-item index="5">
+              <el-menu-item style="padding: 0px;" index="/manager">
                 <i class="el-icon-location"></i>
                 <template #title>管理</template>
               </el-menu-item>
-              <el-menu-item index="6">
+              <el-menu-item style="padding: 0px;" index="/show">
                 <i class="el-icon-location"></i>
                 <template #title>关于</template>
               </el-menu-item>
@@ -47,9 +47,7 @@
         </el-row>
       </el-aside>
       <el-container>
-        <el-header>
-          
-        </el-header>
+        <el-header></el-header>
         <el-main>
           <router-view />
         </el-main>
@@ -117,7 +115,6 @@ body > .el-container {
 }
 
 .el-menu > .el-menu-item {
-  text-align: center;
   font-size: 20px;
   width: 200px;
 }

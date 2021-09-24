@@ -27,7 +27,7 @@
       <template #default="scope">
         <el-button @click="Look(scope.row)" size="small">查看</el-button>
         <el-button @click="edit(scope.row)" type="primary" size="small">编辑</el-button>
-        <el-button type="danger" size="small">删除</el-button>
+        <el-button @click="del(scope.row)" type="danger" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -89,8 +89,8 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogEditVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogEditVisible = false">确 定</el-button>
+        <el-button @click="close">取消</el-button>
+        <el-button type="primary" @click="close">确定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -98,13 +98,14 @@
 
 <script lang="js">
 import { ElMessageBox } from 'element-plus';
-import { defineComponent, reactive, ref, toRefs } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   name: 'Home',
   components: {
   },
   setup() {
+    // 获取数据
     const tableData = reactive([{
       date: '2016-05-03',
       name: '王小虎',
@@ -155,6 +156,11 @@ export default defineComponent({
       address: '上海市普陀区金沙江路 1518 弄',
       zip: 200333
     }])
+    // 定义一些状态
+    const index = ref()
+    const dialogFormVisible = ref(false)
+    const dialogEditVisible = ref(false)
+    // 在关闭dialog之前弹出提示框，是否关闭
     const handleClose = (done) => {
       ElMessageBox.confirm('确认关闭？')
         .then(() => {
@@ -164,30 +170,40 @@ export default defineComponent({
           console.log(err);
         });
     }
+    // 给每行数据添加索引 index
     const tableRowClassName = ({ row, rowIndex }) => {
       row.row_index = rowIndex
     }
-    const index = ref()
-    const dialogFormVisible = ref(false)
+    // 查看数据
     const Look = (row) => {
       dialogFormVisible.value = true
       index.value = row.row_index
     }
-    const dialogEditVisible = ref(false)
-    const date = ref("")
+    // 编辑数据
     const edit = (row) => {
       dialogEditVisible.value = true
       index.value = row.row_index
     }
-
+    // 删除数据
+    const del = (row) => {
+      index.value = row.row_index
+      tableData.splice(row.row_index, 1)
+    }
+    // 编辑 关闭保存之后上传数据
+    const close = () => {
+      dialogEditVisible.value = false
+    }
     return {
       tableData,
       index,
-      Look,
-      edit,
-      handleClose,
       dialogFormVisible,
       dialogEditVisible,
+
+      Look,
+      edit,
+      del,
+      handleClose,
+      close,
       tableRowClassName,
     }
   }

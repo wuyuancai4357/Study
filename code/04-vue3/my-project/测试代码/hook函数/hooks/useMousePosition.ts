@@ -12,6 +12,7 @@ export default function() {
 
   //鼠标移动获取坐标
 
+  // 渲染时，绑定监听
   onMounted(() => {
     window.addEventListener("mousemove", mousemoveHandler);
   }),
