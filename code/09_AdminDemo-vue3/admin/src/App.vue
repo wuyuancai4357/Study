@@ -72,6 +72,7 @@ export default defineComponent({
       await fun2();
       str.value = !str.value
       console.log("async方法");
+      console.log("123");
     }
 
     const fun2 = () => {
